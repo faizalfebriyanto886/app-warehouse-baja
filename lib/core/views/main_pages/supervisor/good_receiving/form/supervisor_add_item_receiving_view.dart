@@ -1,0 +1,812 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sologwarehouseapp/core/controllers/main_pages/supervisor/good_receiving/form/supervisor_add_item_receiving_controller.dart';
+import 'package:sologwarehouseapp/static/color_app.dart';
+import 'package:sologwarehouseapp/widgets/app_bar.dart';
+
+class SupervisorAddItemReceiving extends StatelessWidget {
+  final controller = Get.put(SupervisorAddItemReceivingController());
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<SupervisorAddItemReceivingController>(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBarUI().appBarWithBackButton(
+            actionBackButton: () {
+              Get.back();
+            },
+            actionButton: [],
+            title: "Add new item",
+          ),
+          floatingActionButton: Container(
+            margin: EdgeInsets.only(
+              right: 15,
+              bottom: 15,
+            ),
+            child: FloatingActionButton(
+              backgroundColor: ColorApp.mainColorApp,
+              onPressed: () {
+                controller.saveItem();
+              },
+              elevation: 0.2,
+              child: Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          body: ListView(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.09,
+            ),
+            physics: BouncingScrollPhysics(),
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  onTap: () async {
+                    Get.bottomSheet(
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
+                        padding: EdgeInsets.only(
+                          top: 5,
+                          bottom: 15,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: Text(
+                                "Select imposition here",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: Colors.grey),
+                              ),
+                            ),
+                            for (int i = 0;
+                                i < controller.imposition.length;
+                                i++)
+                              ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor:
+                                      ColorApp.mainColorApp.withOpacity(0.1),
+                                  child: Icon(
+                                    Icons.circle,
+                                    color: ColorApp.mainColorApp,
+                                  ),
+                                ),
+                                onTap: () {
+                                  controller.changeSelectedImposition(i);
+                                },
+                                title: Text(
+                                  controller.imposition[i]['name'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                      color: Colors.black),
+                                ),
+                              )
+                          ],
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                    );
+                  },
+                  dense: true,
+                  title: Text(
+                    "Imposition",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Text(
+                    controller.selectedImposition['name'],
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                        color: Colors.grey),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  onTap: () {
+                    controller.changeItems();
+                  },
+                  dense: true,
+                  title: Text(
+                    "Item",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Text(
+                    controller.item.isEmpty
+                        ? "Choose item here"
+                        : "${controller.item['code']}-${controller.item['name']}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                        color: Colors.grey),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.grey[200],
+                    child: Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.grey,
+                      size: 14,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(5),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                            top: 5,
+                            bottom: 5,
+                          ),
+                          child: Text(
+                            "or scan barcode item",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                              color: ColorApp.mainColorApp,
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              Divider(),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "Quantity",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.quantityItemControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type quantity here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(),
+                  dense: true,
+                  title: Text(
+                    "Package",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.packageControllerText,
+                        keyboardType: TextInputType.text,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Case, Peti, Pallet, Bag or others...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 14,
+                    backgroundColor: Colors.grey[200],
+                    child: Icon(
+                      Icons.archive,
+                      color: Colors.grey,
+                      size: 15,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "Weight",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.weightControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type weight here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.grey[200],
+                    child: Text(
+                      "kg",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "Length",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.lengthControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type quantity here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.grey[200],
+                    child: Text(
+                      "cm",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "Width",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.widthControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type width here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.grey[200],
+                    child: Text(
+                      "cm",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "Height",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.heightControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type height here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                  trailing: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.grey[200],
+                    child: Text(
+                      "cm",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  onTap: () async {
+                    Get.bottomSheet(
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
+                        padding: EdgeInsets.only(
+                          top: 5,
+                          bottom: 15,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: Text(
+                                "Select storage here",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: Colors.grey),
+                              ),
+                            ),
+                            for (int i = 0; i < controller.storage.length; i++)
+                              ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor:
+                                      ColorApp.mainColorApp.withOpacity(0.1),
+                                  child: Icon(
+                                    Icons.circle,
+                                    color: ColorApp.mainColorApp,
+                                  ),
+                                ),
+                                onTap: () {
+                                  controller.changeSelectedStorage(i);
+                                },
+                                title: Text(
+                                  controller.storage[i]['title'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                      color: Colors.black),
+                                ),
+                              )
+                          ],
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                    );
+                  },
+                  dense: true,
+                  title: Text(
+                    "Storage Type",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Text(
+                    controller.selectedStorageTitle,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                        color: Colors.grey),
+                  ),
+                ),
+              ),
+              controller.selectedStorageTitle != controller.storage[0]['title']
+                  ? Opacity(
+                      opacity: 0,
+                    )
+                  : Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                        ),
+                        onTap: () {
+                          controller.changeRack();
+                        },
+                        dense: true,
+                        title: Text(
+                          "Rack",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: Colors.black),
+                        ),
+                        subtitle: Text(
+                          controller.rack.isEmpty
+                              ? "Choose rack here"
+                              : "${controller.rack['code']}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 13,
+                              color: Colors.grey),
+                        ),
+                        trailing: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: Colors.grey[200],
+                          child: Icon(
+                            Icons.chevron_right_rounded,
+                            color: Colors.grey,
+                            size: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+              Container(
+                transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                margin: EdgeInsets.only(
+                  left: 10,
+                  right: 20,
+                ),
+                child: CheckboxListTile(
+                  contentPadding: EdgeInsets.only(),
+                  title: Text(
+                    "Use pallet?",
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                        color: Colors.black),
+                  ),
+                  value: controller.isUsePallet,
+                  onChanged: (value) {
+                    controller.changeStatusIsUsePallet(value!);
+                  },
+                  controlAffinity:
+                      ListTileControlAffinity.leading, //  <-- leading Checkbox
+                ),
+              ),
+              !controller.isUsePallet
+                  ? Opacity(
+                      opacity: 0,
+                    )
+                  : Column(
+                      children: [
+                        Container(
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                            ),
+                            onTap: () {
+                              controller.changePallet();
+                            },
+                            dense: true,
+                            title: Text(
+                              "Pallet",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                            subtitle: Text(
+                              controller.pallet.isEmpty
+                                  ? "Choose pallet"
+                                  : "${controller.pallet['name']} - ${controller.pallet['category']}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13,
+                                  color: Colors.grey),
+                            ),
+                            trailing: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.grey[200],
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color: Colors.grey,
+                                size: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                            ),
+                            dense: true,
+                            title: Text(
+                              "Pallet Qty",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
+                            subtitle: Container(
+                              transform:
+                                  Matrix4.translationValues(0.0, -8.0, 0.0),
+                              child: Theme(
+                                child: TextFormField(
+                                  controller:
+                                      controller.palletQtyControllerText,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  cursorColor: ColorApp.mainColorApp,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                      disabledBorder: UnderlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Colors.transparent)),
+                                      enabledBorder: new UnderlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Colors.transparent)),
+                                      focusedBorder: new UnderlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: Colors.transparent)),
+                                      hintText: "Type pallet qty here...",
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal,
+                                      )),
+                                ),
+                                data: Theme.of(context).copyWith(
+                                  primaryColor: ColorApp.mainColorApp,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
