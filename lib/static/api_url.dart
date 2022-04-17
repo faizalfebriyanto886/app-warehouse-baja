@@ -1,16 +1,17 @@
 class ApiUrl {
   // static String baseUrl = "https://solog.karimunport.com/api/v4/";
-  static String baseUrl = "https://demo.solog.id/api/v4/";
+
+  // API for demo https://demo.mybajatrans.com
+  // API for Baja nyel "https://app.mybajatrans.com" akun yang tersedia Username = febri Password = 12345
+  static String baseUrl = "https://demo.mybajatrans.com/api/v4/";
 
   static String signIn = baseUrl + "login";
 
   static String company = baseUrl + "list_company";
   static String customer = baseUrl + "list_customer";
   static String vehicle = baseUrl + "list_vehicle";
-  static String items =
-      baseUrl + "operational_warehouse/general_item_datatable";
-  static String pallet =
-      baseUrl + "operational_warehouse/master_pallet_datatable";
+  static String items = baseUrl + "operational_warehouse/general_item_datatable";
+  static String pallet = baseUrl + "operational_warehouse/master_pallet_datatable";
   static String rack = baseUrl + "list_rack";
 
   //===========

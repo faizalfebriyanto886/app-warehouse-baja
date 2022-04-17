@@ -11,7 +11,7 @@ import 'package:sologwarehouseapp/widgets/button.dart';
 class SupervisorAddReceivingView extends StatefulWidget {
   @override
   _SupervisorAddReceivingViewState createState() =>
-      _SupervisorAddReceivingViewState();
+      _SupervisorAddReceivingViewState(); 
 }
 
 class _SupervisorAddReceivingViewState extends State<SupervisorAddReceivingView>
@@ -1102,13 +1102,14 @@ class _SupervisorAddReceivingViewState extends State<SupervisorAddReceivingView>
                                           backgroundColor: ColorApp.mainColorApp
                                               .withOpacity(0.1),
                                           child: Icon(
-                                            Icons.camera_alt_rounded,
+                                            Icons.camera_alt,
                                             color: ColorApp.mainColorApp,
                                           ),
                                         ),
                                         onTap: () {
                                           controller.getImage(
                                               from: ImageSource.camera);
+                                          // controller.getImageToFirebase(from: ImageSource.gallery);
                                         },
                                         title: Text(
                                           "Camera",

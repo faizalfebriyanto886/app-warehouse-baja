@@ -772,6 +772,7 @@ class SupervisorEditItemReceivingView extends StatelessWidget {
                         )
                       ],
                     ),
+                    
             ],
           ),
         );

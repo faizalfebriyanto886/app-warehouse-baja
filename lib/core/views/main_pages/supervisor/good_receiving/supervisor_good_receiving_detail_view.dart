@@ -7,8 +7,17 @@ import 'package:sologwarehouseapp/widgets/app_bar.dart';
 import 'package:sologwarehouseapp/widgets/button.dart';
 import 'package:sologwarehouseapp/widgets/waiting_widget.dart';
 
-class SupervisorGoodReceivingDetailView extends StatelessWidget {
+class SupervisorGoodReceivingDetailView extends StatefulWidget {
+  @override
+  State<SupervisorGoodReceivingDetailView> createState() => _SupervisorGoodReceivingDetailViewState();
+}
+
+class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceivingDetailView> {
   final controller = Get.put(SupervisorGoodReceivingDetailController());
+
+  bool isChecked = false;
+  var selectedIndex = [];
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SupervisorGoodReceivingDetailController>(builder: (_) {
@@ -409,6 +418,13 @@ class SupervisorGoodReceivingDetailView extends StatelessWidget {
                               fontSize: 12,
                             ),
                           ),
+                          trailing: GestureDetector(
+                            onTap: ()=> controller.scan(context),
+                            child: Icon(
+                              Icons.qr_code_scanner,
+                              color: Colors.blue,
+                            ),
+                          )
                           // trailing: controller.goodReceivingDetail['item']
                           //                 ['status']
                           //             .toString() ==
@@ -436,109 +452,119 @@ class SupervisorGoodReceivingDetailView extends StatelessWidget {
                         ),
                       ),
                       ListView.builder(
-                          itemCount:
-                              controller.goodReceivingDetail['detail'].length,
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(),
-                          itemBuilder: (ctx, index) {
-                            return Container(
-                              margin: EdgeInsets.only(
-                                bottom: 20,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ListTile(
-                                    contentPadding: EdgeInsets.only(
-                                      left: 20,
-                                      right: 20,
-                                    ),
-                                    dense: true,
-                                    leading: CircleAvatar(
-                                      backgroundColor:
-                                          Colors.grey.withOpacity(0.2),
-                                      child: Text(
-                                        "${index + 1}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ),
-                                    title: Text(
-                                      controller.goodReceivingDetail['detail']
-                                              [index]['item_name']
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      controller.goodReceivingDetail['detail']
-                                              [index]['imposition_name']
-                                          .toString(),
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    trailing: Text(
-                                      controller.goodReceivingDetail['detail']
-                                              [index]['qty']
-                                          .toString(),
-                                      style: TextStyle(
-                                        color: ColorApp.mainColorApp,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                        itemCount: controller.goodReceivingDetail['detail'].length,
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(),
+                        itemBuilder: (ctx, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                              bottom: 20,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  contentPadding: EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  dense: true,
+                                  leading: Checkbox(
+                                    value: isChecked,
+                                    onChanged: (bool? value) {
+                                      if (selectedIndex.contains(index)) {
+                                        selectedIndex.remove(index);
+                                      } else {
+                                        selectedIndex.add(index);
+                                      }
+                                      // setState(() {
+                                      //   isChecked = value!;
+                                      // });
+                                    },
+                                  ),
+                                  // GestureDetector(
+                                  //   onTap: null,
+                                  //   child: Icon(Icons.check_box_outline_blank)
+                                  // ),
+                                  //  CircleAvatar(
+                                  //   backgroundColor:
+                                  //       Colors.grey.withOpacity(0.2),
+                                  //   child: Text(
+                                  //     "${index + 1}",
+                                  //     style: TextStyle(
+                                  //         color: Colors.black,
+                                  //         fontSize: 12,
+                                  //         fontWeight: FontWeight.normal),
+                                  //   ),
+                                  // ),
+                                  title: Text(
+                                    controller.goodReceivingDetail['detail'][index]['item_name'].toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 20,
-                                      right: 20,
+                                  subtitle: Text(
+                                    controller.goodReceivingDetail['detail'][index]['imposition_name'].toString(),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  trailing: Text(
+                                    controller.goodReceivingDetail['detail'][index]['qty'].toString() + " Pallet",
+                                    style: TextStyle(
+                                      color: ColorApp.mainColorApp,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    child: RichText(
-                                      text: TextSpan(children: <WidgetSpan>[
-                                        WidgetSpan(
-                                          child: Text(
-                                            "Storage type : ${controller.goodReceivingDetail['detail'][index]['rack'] == null ? '-' : controller.goodReceivingDetail['detail'][index]['rack']['code']}",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal,
-                                            ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: RichText(
+                                    text: TextSpan(children: <WidgetSpan>[
+                                      WidgetSpan(
+                                        child: Text(
+                                          "Storage type : ${controller.goodReceivingDetail['detail'][index]['rack'] == null ? '-' : controller.goodReceivingDetail['detail'][index]['rack']['code']}",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal,
                                           ),
                                         ),
-                                        controller.goodReceivingDetail['detail']
-                                                    [index]['pallet'] ==
-                                                null
-                                            ? WidgetSpan(
-                                                child: Opacity(
-                                                opacity: 0,
-                                              ))
-                                            : WidgetSpan(
-                                                child: Text(
-                                                  " · Pallet : ${controller.goodReceivingDetail['detail'][index]['pallet'] == null ? '' : controller.goodReceivingDetail['detail'][index]['pallet']['name']} ",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
+                                      ),
+                                      controller.goodReceivingDetail['detail']
+                                                  [index]['pallet'] ==
+                                              null
+                                          ? WidgetSpan(
+                                              child: Opacity(
+                                              opacity: 0,
+                                            ))
+                                          : WidgetSpan(
+                                              child: Text(
+                                                " · Pallet : ${controller.goodReceivingDetail['detail'][index]['pallet'] == null ? '' : controller.goodReceivingDetail['detail'][index]['pallet']['name']} ",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
-                                      ]),
-                                    ),
+                                            ),
+                                    ]),
                                   ),
-                                ],
-                              ),
-                            );
-                          }),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
                       controller.goodReceivingDetail['surat_jalan'].isEmpty
                           ? Opacity(
                               opacity: 0,
@@ -564,9 +590,7 @@ class SupervisorGoodReceivingDetailView extends StatelessWidget {
                                 Container(
                                   height: 300,
                                   child: ListView.builder(
-                                      itemCount: controller
-                                          .goodReceivingDetail['surat_jalan']
-                                          .length,
+                                      itemCount: controller.goodReceivingDetail['surat_jalan'].length,
                                       physics: BouncingScrollPhysics(),
                                       shrinkWrap: true,
                                       scrollDirection: Axis.horizontal,

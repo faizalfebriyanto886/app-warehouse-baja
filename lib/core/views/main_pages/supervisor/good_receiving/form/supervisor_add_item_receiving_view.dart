@@ -18,22 +18,46 @@ class SupervisorAddItemReceiving extends StatelessWidget {
             actionButton: [],
             title: "Add new item",
           ),
-          floatingActionButton: Container(
-            margin: EdgeInsets.only(
-              right: 15,
-              bottom: 15,
-            ),
-            child: FloatingActionButton(
-              backgroundColor: ColorApp.mainColorApp,
-              onPressed: () {
-                controller.saveItem();
-              },
-              elevation: 0.2,
-              child: Icon(
-                Icons.check,
-                color: Colors.white,
+          floatingActionButton: 
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                margin: EdgeInsets.only(
+                  right: 15,
+                  bottom: 15,
+                ),
+                child: FloatingActionButton(
+                  backgroundColor: ColorApp.mainColorApp,
+                  onPressed: () {
+                    controller.saveItem();
+                  },
+                  elevation: 0.2,
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
+              Container(
+                margin: EdgeInsets.only(
+                  right: 15,
+                  bottom: 0,
+                ),
+                child: FloatingActionButton(
+                  backgroundColor: ColorApp.mainColorApp,
+                  onPressed: () {
+                    controller.nextItems();
+                  },
+                  elevation: 0.2,
+                  child: Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                  ),
+                ),
+              ),  
+            ],
           ),
           body: ListView(
             padding: EdgeInsets.only(
@@ -803,6 +827,173 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                         )
                       ],
                     ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "No Seri",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.noSeriControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type no seri here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                  trailing: GestureDetector(
+                    onTap: ()=> controller.scan(context),
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.grey[200],
+                      child: Icon(Icons.qr_code_scanner)
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "No Order",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.orderNumberControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type no order here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  dense: true,
+                  title: Text(
+                    "Batch",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black),
+                  ),
+                  subtitle: Container(
+                    transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                    child: Theme(
+                      child: TextFormField(
+                        controller: controller.batchControllerText,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        cursorColor: ColorApp.mainColorApp,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                            disabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            enabledBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            focusedBorder: new UnderlineInputBorder(
+                                borderSide:
+                                    new BorderSide(color: Colors.transparent)),
+                            hintText: "Type batch here...",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                            )),
+                      ),
+                      data: Theme.of(context).copyWith(
+                        primaryColor: ColorApp.mainColorApp,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         );

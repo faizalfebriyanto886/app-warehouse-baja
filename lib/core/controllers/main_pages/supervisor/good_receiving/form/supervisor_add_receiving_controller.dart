@@ -22,6 +22,8 @@ import 'package:sologwarehouseapp/static/shared_preferences_key.dart';
 
 import '../supervisor_good_receiving_controller.dart';
 
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage; // for Firebase Storage
+
 class SupervisorAddReceivingController extends GetxController {
   static SupervisorAddReceivingController get controller =>
       Get.find<SupervisorAddReceivingController>();
@@ -45,14 +47,20 @@ class SupervisorAddReceivingController extends GetxController {
   DateTime receiveDate = DateTime.now();
   List<Map<String, dynamic>> items = [];
 
+  File? _photo;
+
   Uint8List? signatureImage;
 
   final picker = ImagePicker();
   List<File> attachmentFiles = [];
   List<MultipartFile> multipartFiles = [];
 
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
   @override
   void onInit() {
+    update();
     super.onInit();
   }
 
@@ -131,6 +139,7 @@ class SupervisorAddReceivingController extends GetxController {
     var value = await Get.to(() => SupervisorAddItemReceiving(), arguments: {
       "warehouse_id": warehouse['id'],
     });
+    update();
     if (value != null) {
       items.add(value['items']);
       update();
@@ -151,10 +160,40 @@ class SupervisorAddReceivingController extends GetxController {
     final pickedFile = await picker.pickImage(
       source: from,
     );
+    print(pickedFile);
     if (pickedFile != null) {
       File compressedFile = await compressFile(File(pickedFile.path));
       attachmentFiles.add(compressedFile);
-      update();
+      update();  
+    } else {
+      print("image not found");
+    }
+  }
+
+  // for testing
+  Future getImageToFirebase({required ImageSource from, required String namePath}) async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(filePath: namePath);
+      } else {
+        print('No image selected.');
+      }
+  }
+
+  // upload image with firebase storage
+  Future uploadFile({required String filePath}) async {
+    if (_photo == null) return;
+    final destination = "image-attach";
+
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('$filePath/');
+      await ref.putFile(_photo!);
+    } catch (e) {
+      print('error occured');
     }
   }
 
@@ -169,8 +208,20 @@ class SupervisorAddReceivingController extends GetxController {
     if (result != null) {
       for (var i = 0; i < result.files.length; i++) {
         attachmentFiles.add(File(result.files[i].path!));
+        _photo = File(result.files[i].path!);
+        uploadFile(filePath: result.files[i].name);
+
+        // getImageToFirebase(from: ImageSource.gallery, namePath: result.files[i].name);
+        print(result.files[i].name);
       }
       update();
+      Get.snackbar(
+        "Success", 
+        "File berhasil di upload",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green.withOpacity(0.2),
+        colorText: Colors.green,
+      );
     }
   }
 
@@ -263,7 +314,7 @@ class SupervisorAddReceivingController extends GetxController {
           ApiUrl.receiptAddNew,
           data: FormData.fromMap({
             "company_id": company['id'],
-            "receipt_type_id": 24,
+            "receipt_type_id": 14,
             "purchase_order_id": 0,
             "receive_date": DateFormat("dd-M-yyyy").format(receiveDate),
             "receive_time": DateFormat("HH:mm").format(receiveDate),
@@ -408,8 +459,8 @@ class SupervisorAddReceivingController extends GetxController {
           ApiUrl.receiptAddNew,
           data: FormData.fromMap({
             "company_id": company['id'],
-            "receipt_type_id": 24,
-            "purchase_order_id": 0,
+            "receipt_type_id": 14,
+            "purchase_order_id": 39,
             "receive_date": DateFormat("dd-M-yyyy").format(receiveDate),
             "receive_time": DateFormat("HH:mm").format(receiveDate),
             "sender": shipperControllerText.text.toString(),
@@ -427,7 +478,9 @@ class SupervisorAddReceivingController extends GetxController {
             "vehicle_type_id": vehicle['id'],
             "detail": items.toList(),
             "status": 1,
-            "files": multipartFiles,
+            "files" : null,
+            // "files": multipartFiles.toList(),
+            // "ttd" : null,
             "ttd": signatureImage == null
                 ? ""
                 : "data:image/png;base64,${base64.encode(signatureImage!)}",

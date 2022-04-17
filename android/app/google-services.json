@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "744325109721",
+    "project_id": "app-warehouse-baja",
+    "storage_bucket": "app-warehouse-baja.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744325109721:android:f9f26b56fe905823bdabc8",
+        "android_client_info": {
+          "package_name": "com.solog.warehouseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744325109721-t28q09f00ek2mrqokkrobr4oul8ib86b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATnpd647CTHSth3NruzlK07scIAR3tcSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744325109721-t28q09f00ek2mrqokkrobr4oul8ib86b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
