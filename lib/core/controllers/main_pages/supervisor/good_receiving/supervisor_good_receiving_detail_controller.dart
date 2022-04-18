@@ -24,6 +24,8 @@ class SupervisorGoodReceivingDetailController extends GetxController {
   bool itemsCheck = false;
   ScanController scanController = ScanController();
   
+  List<bool> isChecked = [];
+
 
   @override
   // TODO: implement listeners
@@ -50,6 +52,9 @@ class SupervisorGoodReceivingDetailController extends GetxController {
       parameters: {},
     ).then((value) {
       goodReceivingDetail.addAll(value.data);
+      for (var i = 0; i < goodReceivingDetail['detail'].length; i ++) {
+        isChecked.add(false);
+      }
       isLoading = false;
       update();
       print(goodReceivingDetail['item']['status']);

@@ -471,10 +471,11 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                   ),
                                   dense: true,
                                   leading: Checkbox(
-                                    value: isChecked,
+                                    value: controller.isChecked[index],
                                     onChanged: (bool? value) {
+                                      controller.isChecked[index] = value!;
+                                      controller.update();
                                       setState(() {
-                                        isChecked = value!;
                                       });
                                     },
                                   ),
