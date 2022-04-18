@@ -473,14 +473,9 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                   leading: Checkbox(
                                     value: isChecked,
                                     onChanged: (bool? value) {
-                                      if (selectedIndex.contains(index)) {
-                                        selectedIndex.remove(index);
-                                      } else {
-                                        selectedIndex.add(index);
-                                      }
-                                      // setState(() {
-                                      //   isChecked = value!;
-                                      // });
+                                      setState(() {
+                                        isChecked = value!;
+                                      });
                                     },
                                   ),
                                   // GestureDetector(
