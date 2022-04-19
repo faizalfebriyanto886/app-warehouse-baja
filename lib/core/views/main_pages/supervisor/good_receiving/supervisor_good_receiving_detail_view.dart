@@ -63,7 +63,19 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                 buttonColor: ColorApp.mainColorApp,
                                 colorTextButton: Colors.white,
                                 function: () {
-                                  controller.approveReceipt();
+                                  if (controller.isChecked.contains(true)) {
+                                    print("lanjut ke approved");
+                                    controller.approveReceipt();
+                                  } else {
+                                    Get.snackbar(
+                                      "Failed", 
+                                      "please fill in the items first",
+                                      margin: EdgeInsets.all(10),
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                      snackPosition: SnackPosition.BOTTOM,
+                                    );
+                                  }
                                 },
                                 textButton: "Approve",
                               ),

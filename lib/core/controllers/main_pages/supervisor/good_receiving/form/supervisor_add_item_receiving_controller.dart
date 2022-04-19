@@ -219,9 +219,9 @@ class SupervisorAddItemReceivingController extends GetxController {
         "pallet_qty":
             isUsePallet ? palletQtyControllerText.text.toString() : null,
         "pallet_id": isUsePallet ? pallet['id'] : null,
-        "serial_number" : noSeriControllerText.toString(),
-        "order_number" : orderNumberControllerText.toString(),
-        "batch" : batchControllerText.toString(),
+        "serial_number" : noSeriControllerText.text.toString(),
+        "order_number" : orderNumberControllerText.text.toString(),
+        "batch" : batchControllerText.text.toString(),
       };
       // print(itemToSendBack);
       Get.back(result: {"items": itemToSendBack});
