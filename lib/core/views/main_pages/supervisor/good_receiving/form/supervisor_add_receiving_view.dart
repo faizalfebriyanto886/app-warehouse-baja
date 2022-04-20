@@ -55,38 +55,38 @@ class _SupervisorAddReceivingViewState extends State<SupervisorAddReceivingView>
                               right: 5,
                             ),
                             child: AppButton().iconButton(
-                              buttonColor: Colors.white,
-                              colorTextButton: ColorApp.mainColorApp,
+                              buttonColor: ColorApp.mainColorApp,
+                              colorTextButton: Colors.white,
                               function: () {
                                 controller.saveToDraft();
                               },
                               icon: Icon(
                                 Icons.drafts_rounded,
-                                color: ColorApp.mainColorApp,
-                              ),
-                              textButton: "Draft",
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              left: 5,
-                            ),
-                            child: AppButton().iconButton(
-                              buttonColor: ColorApp.mainColorApp,
-                              colorTextButton: Colors.white,
-                              function: () {
-                                controller.saveToFinal();
-                              },
-                              icon: Icon(
-                                Icons.check,
                                 color: Colors.white,
                               ),
-                              textButton: "Save",
+                              textButton: "Save to Draft",
                             ),
                           ),
                         ),
+                        // Expanded(
+                        //   child: Container(
+                        //     margin: EdgeInsets.only(
+                        //       left: 5,
+                        //     ),
+                        //     child: AppButton().iconButton(
+                        //       buttonColor: ColorApp.mainColorApp,
+                        //       colorTextButton: Colors.white,
+                        //       function: () {
+                        //         controller.saveToFinal();
+                        //       },
+                        //       icon: Icon(
+                        //         Icons.check,
+                        //         color: Colors.white,
+                        //       ),
+                        //       textButton: "Save",
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -772,22 +772,48 @@ class _SupervisorAddReceivingViewState extends State<SupervisorAddReceivingView>
                                   color: Colors.black,
                                 ),
                               ),
-                              subtitle: Text(
-                                "${controller.items[index]['storage_type']} · ${controller.items[index]['is_use_pallet'] == 1 ? 'using Pallet' : ''}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 11,
-                                  color: Colors.grey,
-                                ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${controller.items[index]['storage_type']}  ${controller.items[index]['is_use_pallet'] == 1 ? 'using Pallet' : ''}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 11,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                       controller.items[index]['rack']["code"] != null ?Text(
+                                        ": ${controller.items[index]['rack']["code"]}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 11,
+                                          color: Colors.grey,
+                                        ),
+                                      ) : SizedBox(),
+                                    ],
+                                  ),
+                                  controller.items[index]['serial_number'] != null ? Text(
+                                    "Pallet id : ${controller.items[index]['serial_number']} | No. Order : ${controller.items[index]['order_number']} | Batch : ${controller.items[index]['batch']}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 11,   
+                                      color: Colors.grey,
+                                    ),
+                                  ) : SizedBox(),
+                                ],
                               ),
                               trailing: Text(
-                                controller.items[index]['qty'],
+                                controller.items[index]['qty'].toString(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                   color: ColorApp.mainColorApp,
                                 ),
                               ),
+                              isThreeLine: true,
                             ),
                           );
                         }),

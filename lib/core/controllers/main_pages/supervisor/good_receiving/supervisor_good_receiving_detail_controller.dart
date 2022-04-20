@@ -52,6 +52,7 @@ class SupervisorGoodReceivingDetailController extends GetxController {
       parameters: {},
     ).then((value) {
       goodReceivingDetail.addAll(value.data);
+      print(goodReceivingDetail);
       for (var i = 0; i < goodReceivingDetail['detail'].length; i ++) {
         isChecked.add(false);
       }

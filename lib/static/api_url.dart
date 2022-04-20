@@ -3,7 +3,7 @@ class ApiUrl {
 
   // API for demo https://demo.mybajatrans.com
   // API for Baja nyel "https://app.mybajatrans.com" akun yang tersedia Username = febri Password = 12345
-  static String baseUrl = "https://demo.mybajatrans.com/api/v4/";
+  static String baseUrl = "https://app.mybajatrans.com/api/v4/";
 
   static String signIn = baseUrl + "login";
 

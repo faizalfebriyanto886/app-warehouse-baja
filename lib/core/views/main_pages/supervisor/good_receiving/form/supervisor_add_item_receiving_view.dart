@@ -49,6 +49,7 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                   backgroundColor: ColorApp.mainColorApp,
                   onPressed: () {
                     controller.nextItems();
+                    
                   },
                   elevation: 0.2,
                   child: Icon(
@@ -835,7 +836,7 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                   ),
                   dense: true,
                   title: Text(
-                    "No Seri",
+                    "Pallet id",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -866,7 +867,7 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                             focusedBorder: new UnderlineInputBorder(
                                 borderSide:
                                     new BorderSide(color: Colors.transparent)),
-                            hintText: "Type no seri here...",
+                            hintText: "Type palet id here...",
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 13,

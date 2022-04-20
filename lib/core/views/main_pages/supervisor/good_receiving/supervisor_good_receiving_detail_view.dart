@@ -109,7 +109,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                           ),
                         ),
                         subtitle: Text(
-                          controller.goodReceivingDetail['item']['code'],
+                          controller.goodReceivingDetail['item']['code'].toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 13,
@@ -134,7 +134,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                         ),
                         subtitle: Text(
                           controller.goodReceivingDetail['item']
-                              ['purchase_order_code'],
+                              ['purchase_order_code'].toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 13,
@@ -158,7 +158,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                           ),
                         ),
                         subtitle: Text(
-                          controller.goodReceivingDetail['item']['status_name'],
+                          controller.goodReceivingDetail['item']['status_name'].toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                   null
                               ? "-"
                               : controller.goodReceivingDetail['item']
-                                  ['description'],
+                                  ['description'].toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.normal,
@@ -229,7 +229,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                         ),
                         subtitle: Text(
                           controller.goodReceivingDetail['item']['warehouse']
-                              ['name'],
+                              ['name'].toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 13,
@@ -254,7 +254,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                         ),
                         subtitle: Text(
                           controller.goodReceivingDetail['item']
-                              ['warehouse_staff']['name'],
+                              ['warehouse_staff']['name'].toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 13,
@@ -331,7 +331,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                       null
                                   ? "-"
                                   : controller.goodReceivingDetail['item']
-                                      ['vehicle_type_name'],
+                                      ['vehicle_type_name'].toString(),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 13,
@@ -517,7 +517,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                     ),
                                   ),
                                   subtitle: Text(
-                                    controller.goodReceivingDetail['detail'][index]['imposition_name'].toString(),
+                                    "${controller.goodReceivingDetail['detail'][index]['imposition_name']}",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -531,6 +531,7 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(

@@ -141,6 +141,7 @@ class SupervisorAddItemReceivingController extends GetxController {
   }
 
   saveItem() {
+    final val =  Get.find<SupervisorAddReceivingController>().items.where((element) => element["serial_number"] == noSeriControllerText.text);
     if (item.isEmpty) {
       Get.snackbar(
         "Oops!",
@@ -179,6 +180,41 @@ class SupervisorAddItemReceivingController extends GetxController {
         "Oops!",
         // errorValue.toString(),
         "Please select pallet and fill pallet quantity",
+        backgroundColor: Colors.red[400],
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        isDismissible: true,
+        margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      );
+    } else if (
+      noSeriControllerText.text == ""  || 
+      orderNumberControllerText.text == "" ||
+      batchControllerText.text == ""
+    ){ Get.snackbar(
+        "Oops!",
+        "Please fill 3 line last",
+        backgroundColor: Colors.red[400],
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        isDismissible: true,
+        margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      );
+    } else if (val.length > 0){ 
+      print("ada");
+      Get.snackbar(
+        "Oops!",
+        // errorValue.toString(),
+        "Pallet id can be exist",
         backgroundColor: Colors.red[400],
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -229,6 +265,7 @@ class SupervisorAddItemReceivingController extends GetxController {
   }
 
   nextItems() {
+    final val =  Get.find<SupervisorAddReceivingController>().items.where((element) => element["serial_number"] == noSeriControllerText.text);
     if (item.isEmpty) {
       Get.snackbar(
         "Oops", 
@@ -274,6 +311,41 @@ class SupervisorAddItemReceivingController extends GetxController {
         isDismissible: true,
         margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
       );
+    } else if (
+      noSeriControllerText.text == ""  || 
+      orderNumberControllerText.text == "" ||
+      batchControllerText.text == ""
+    ){ Get.snackbar(
+        "Oops!",
+        "Please fill 3 line last",
+        backgroundColor: Colors.red[400],
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        isDismissible: true,
+        margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      );
+    } else if (val.length > 0){ 
+      print("ada");
+      Get.snackbar(
+        "Oops!",
+        // errorValue.toString(),
+        "Pallet id can be exist",
+        backgroundColor: Colors.red[400],
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING,
+        icon: Icon(
+          Icons.warning,
+          color: Colors.white,
+        ),
+        isDismissible: true,
+        margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+      );
     } else {
       Map<String, dynamic> itemToSendBack = {
         "imposition": selectedImposition['id'],
@@ -303,9 +375,9 @@ class SupervisorAddItemReceivingController extends GetxController {
         "pallet_qty":
             isUsePallet ? palletQtyControllerText.text.toString() : null,
         "pallet_id": isUsePallet ? pallet['id'] : null,
-        // "serial_number" : noSeriControllerText.toString(),
-        // "order_number" : orderNumberControllerText.toString(),
-        // "batch" : batchControllerText.toString(),
+        "serial_number" : noSeriControllerText.text.toString(),
+        "order_number" : orderNumberControllerText.text.toString(),
+        "batch" : batchControllerText.text.toString(),
       };
         noSeriControllerText.text = "";
         orderNumberControllerText.text = "";
@@ -395,4 +467,5 @@ class SupervisorAddItemReceivingController extends GetxController {
   //     print("Form add receiving : ${value['items']}");
   //   }
   // }
+
 }

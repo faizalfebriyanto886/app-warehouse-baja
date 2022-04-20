@@ -121,6 +121,14 @@ class SupervisorMainPagesView extends StatelessWidget {
                     controller.signOut();
                   },
                 ),
+                menuGrid(
+                  color: ColorApp.mainColorApp,
+                  icon: Icons.logout,
+                  title: "TES Search",
+                  action: () {
+                   
+                  },
+                ),
               ],
             ),
           ),

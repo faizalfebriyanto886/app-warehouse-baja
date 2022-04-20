@@ -315,7 +315,7 @@ class SupervisorAddReceivingController extends GetxController {
           data: FormData.fromMap({
             "company_id": company['id'],
             "receipt_type_id": 14,
-            "purchase_order_id": 0,
+            "purchase_order_id": 39,
             "receive_date": DateFormat("dd-M-yyyy").format(receiveDate),
             "receive_time": DateFormat("HH:mm").format(receiveDate),
             "sender": shipperControllerText.text.toString(),

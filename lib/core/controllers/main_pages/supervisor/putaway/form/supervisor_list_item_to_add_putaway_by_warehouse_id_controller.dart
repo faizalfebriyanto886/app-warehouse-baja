@@ -11,6 +11,7 @@ class SupervisorListItemToAddPutawayByWarehouseIdController
   var warehouseId = Get.arguments['warehouse_id'];
   List itemList = [];
   bool isLoading = true;
+  bool needReset = false;
 
   @override
   void onInit() {
