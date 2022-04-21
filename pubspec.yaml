@@ -45,6 +45,7 @@ dependencies:
   permission_handler: 8.1.6
   shared_preferences: ^2.0.12
   scan: ^1.6.0
+  string_similarity: ^2.0.0
 
   # for Firebase 
   firebase_storage: ^10.2.8

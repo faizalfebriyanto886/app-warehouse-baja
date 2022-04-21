@@ -478,8 +478,8 @@ class SupervisorAddReceivingController extends GetxController {
             "vehicle_type_id": vehicle['id'],
             "detail": items.toList(),
             "status": 1,
-            "files" : null,
-            // "files": multipartFiles.toList(),
+            // "files" : null,
+            "files": multipartFiles.toList(),
             // "ttd" : null,
             "ttd": signatureImage == null
                 ? ""

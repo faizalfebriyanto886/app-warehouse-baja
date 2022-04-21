@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_statements
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sologwarehouseapp/core/controllers/main_pages/supervisor/good_receiving/form/supervisor_add_item_receiving_controller.dart';
@@ -271,7 +273,8 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                   left: 20,
                   right: 20,
                 ),
-                child: ListTile(
+                child:controller.packageWrite ?
+                   ListTile(
                   contentPadding: EdgeInsets.only(),
                   dense: true,
                   title: Text(
@@ -306,7 +309,7 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                             focusedBorder: new UnderlineInputBorder(
                                 borderSide:
                                     new BorderSide(color: Colors.transparent)),
-                            hintText: "Case, Peti, Pallet, Bag or others...",
+                            hintText: "Write here ...",
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
@@ -327,7 +330,160 @@ class SupervisorAddItemReceiving extends StatelessWidget {
                       size: 15,
                     ),
                   ),
-                ),
+                )
+                 : 
+                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Package",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: Colors.black),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                            value: controller.packgeValue[0], 
+                            onChanged: (val){
+                              print(controller.packgeValue[1]);
+                              if(controller.packgeValue[1] == true || controller.packgeValue[2] == true ||controller.packgeValue[3] == true){
+                                print("Tidak bisa diubah");
+                              } else {
+                                print("Bisa diubah");
+                                print(val);
+                                controller.packgeValue[0] = val;
+                                controller.packageControllerText.text = "CASE";
+                                controller.update();
+                              }
+                            }),
+                            Text("CASE",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              )
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                            value: controller.packgeValue[1], 
+                            onChanged: (val){
+                              if(controller.packgeValue[0] == true || controller.packgeValue[2] == true ||controller.packgeValue[3] == true){
+                                print("Tidak bisa diubah");
+                              } else {
+                                print("Bisa diubah");
+                                print(val);
+                                controller.packgeValue[1] = val;
+                                controller.packageControllerText.text = "PETI";
+                                controller.update();
+                              }
+                            }),
+                            Text("PETI",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              )
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                            value: controller.packgeValue[2], 
+                            onChanged: (val){
+                                if(controller.packgeValue[0] == true || controller.packgeValue[1] == true ||controller.packgeValue[3] == true){
+                                  print("Tidak bisa diubah");
+                                } else {
+                                  print("Bisa diubah");
+                                  print(val);
+                                  controller.packgeValue[2] = val;
+                                  controller.packageControllerText.text = "PALLET";
+                                  controller.update();
+                                }
+                            }),
+                            Text("PALLET",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              )
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                            value: controller.packgeValue[3], 
+                            onChanged: (val){
+                                if(controller.packgeValue[0] == true || controller.packgeValue[1] == true ||controller.packgeValue[2] == true){
+                                  print("Tidak bisa diubah");
+                                } else {
+                                  print("Bisa diubah");
+                                  print(val);
+                                  controller.packgeValue[3] = val;
+                                  controller.packageControllerText.text = "BAG";
+                                  controller.update();
+                                }
+                            }),
+                            Text("BAG",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              )
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height:6,),
+                    GestureDetector(
+                      onTap: (){
+                        controller.packageWrite = true;
+                        controller.packageControllerText.text = "";
+                        controller.update();
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.edit, color: Colors.grey,),
+                          SizedBox(width: 4,),
+                          Text("Write manually?",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          )
+                        ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height:10,),
+                    // ListTile(
+                    //   title: Text("Write manually",
+                    //     style: TextStyle(
+                    //       color: Colors.grey,
+                    //       fontSize: 14,
+                    //       fontWeight: FontWeight.normal,
+                    //     )
+                    //   ),
+                    //   onTap: (){
+                    //     controller.packageWrite = true;
+                    //     controller.packageControllerText.text = "";
+                    //     controller.update();
+                    //   },
+                    //   trailing: Icon(Icons.edit)
+                    // )
+                  ],
+                )
+               
               ),
               Container(
                 child: ListTile(

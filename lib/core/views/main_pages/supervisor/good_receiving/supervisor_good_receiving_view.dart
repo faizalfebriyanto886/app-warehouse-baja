@@ -212,8 +212,9 @@ class SupervisorGoodReceivingView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                // print( controller.goodReceiveList[index]['id']);
+                                print( controller.goodReceiveList[index]['id'] + "ID GR COK");
                                 Get.to(
+                                
                                     () => SupervisorGoodReceivingDetailView(),
                                     arguments: {
                                       "good_receiving_id": controller

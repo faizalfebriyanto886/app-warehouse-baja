@@ -30,6 +30,8 @@ class SupervisorAddItemReceivingController extends GetxController {
     }
   ];
 
+  List packgeValue = [false, false, false, false];
+
   final quantityItemControllerText = TextEditingController();
   final weightControllerText = TextEditingController();
   final lengthControllerText = TextEditingController();
@@ -56,6 +58,8 @@ class SupervisorAddItemReceivingController extends GetxController {
 
   String valueScan = "";
   var valueScanCode = Get.arguments['value_scan'];
+
+  bool packageWrite = false;
 
   var warehouseId = "";
   @override
@@ -88,7 +92,7 @@ class SupervisorAddItemReceivingController extends GetxController {
   }
 
   changeSelectedImposition(int index) {
-    Get.back();
+  Get.back();
     selectedImposition = imposition[index];
     update();
   }
@@ -192,12 +196,9 @@ class SupervisorAddItemReceivingController extends GetxController {
         margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
       );
     } else if (
-      noSeriControllerText.text == ""  || 
-      orderNumberControllerText.text == "" ||
-      batchControllerText.text == ""
-    ){ Get.snackbar(
+      noSeriControllerText.text == ""){ Get.snackbar(
         "Oops!",
-        "Please fill 3 line last",
+        "Palett id cannot be empty",
         backgroundColor: Colors.red[400],
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -312,16 +313,13 @@ class SupervisorAddItemReceivingController extends GetxController {
         margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
       );
     } else if (
-      noSeriControllerText.text == ""  || 
-      orderNumberControllerText.text == "" ||
-      batchControllerText.text == ""
-    ){ Get.snackbar(
+      noSeriControllerText.text == ""){ Get.snackbar(
         "Oops!",
-        "Please fill 3 line last",
+        "Palett id cannot be empty",
         backgroundColor: Colors.red[400],
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
-        snackStyle: SnackStyle.FLOATING,
+        snackStyle: SnackStyle.FLOATING,  
         icon: Icon(
           Icons.warning,
           color: Colors.white,
@@ -391,7 +389,7 @@ class SupervisorAddItemReceivingController extends GetxController {
     }
   }
 
-    scan(context) async {
+  scan(context) async {
     await [Permission.camera].request();
     var status = await Permission.camera.status;
     if (status.isDenied) {

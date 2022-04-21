@@ -516,12 +516,24 @@ class _SupervisorGoodReceivingDetailViewState extends State<SupervisorGoodReceiv
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  subtitle: Text(
-                                    "${controller.goodReceivingDetail['detail'][index]['imposition_name']}",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.normal),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${controller.goodReceivingDetail['detail'][index]['imposition_name']}",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                      controller.goodReceivingDetail['detail'][index]['serial_number'] != null ? Text(
+                                        "Pallet id :  ${controller.goodReceivingDetail['detail'][index]['serial_number']}",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal),
+                                      ) : SizedBox(),
+                                    ],
                                   ),
                                   trailing: Text(
                                     controller.goodReceivingDetail['detail'][index]['qty'].toString() + " Pallet",
